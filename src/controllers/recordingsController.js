@@ -1,18 +1,12 @@
-import multer from 'multer';
 import { getDb } from '../config/db.js';
 import { v2 as cloudinary } from 'cloudinary';
 
-const upload = multer({
-storage: multer.memoryStorage(),
-limits: { fileSize: 200 * 1024 * 1024 }, // 200MB
-fileFilter: (_req, file, cb) => {
-const ok = ['video/webm', 'video/mp4', 'video/quicktime'].includes(file.mimetype);
-cb(ok ? null : new Error('Unsupported file type'), ok);
-}
-});
 
 
-export const uploadRecordings=async (req, res) => {
+
+export const uploadRecordings=async (req ,res) => {
+
+  
 try {
 if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
 
@@ -29,6 +23,8 @@ const stream = cloudinary.uploader.upload_stream(
 );
 stream.end(buffer);
 });
+
+
 
 
 const { public_id, secure_url, bytes, format, duration } = uploadResult;
