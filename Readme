@@ -1,0 +1,41 @@
+# Screen-Recorded Backend (Cloudinary + Multer + SQLite)
+
+
+## Prerequisites
+- Node 18+
+- Cloudinary account (Cloud Name, API Key, API Secret)
+
+
+## Setup
+1. Add `.env` and fill values.
+2. Install deps: `npm install`
+3. Run dev: `npm run dev` (or `npm start`)
+
+
+# Frontend origin for CORS (adjust as needed)
+FRONTEND_ORIGIN=URL
+
+
+# Cloudinary credentials
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+
+
+# Server
+PORT=5000
+
+## Endpoints
+- `GET /api/health` → `{ status: 'ok' }`
+- `POST /api/recordings` → multipart/form-data with `video` field; uploads to Cloudinary and stores metadata in SQLite. Returns `{ message, recording }`.
+- `GET /api/recordings` → list recordings (metadata with `secure_url`).
+- `GET /api/recordings/:id` → 302 redirect to Cloudinary URL (CDN streams video).
+- `DELETE /api/recordings/:id` → (optional) deletes from Cloudinary + DB.
+
+
+
+## ✅ Notes
+- Uses **`multer.memoryStorage()`** so files never touch disk.
+- **Cloudinary CDN** handles Range/seek streaming—no custom range logic needed.
+- **SQLite** stores only metadata: `public_id`, `secure_url`, etc.
+- Ensure your frontend uses the same `video` field key when uploading.
