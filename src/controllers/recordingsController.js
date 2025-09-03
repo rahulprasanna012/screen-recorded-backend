@@ -1,6 +1,5 @@
-import express from 'express';
 import multer from 'multer';
-import { getDb } from '../config/db';
+import { getDb } from '../config/db.js';
 import { v2 as cloudinary } from 'cloudinary';
 
 const upload = multer({

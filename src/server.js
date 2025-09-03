@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import recordingsRouter from './routes/recordings.js';
+import recordingsRouter from './routers/recordingsRoute.js';
 import { configureCloudinary } from './config/cloudinary.js';
 import { getDb } from './config/db.js';
 
